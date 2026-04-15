@@ -51,7 +51,7 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              {user?.isAdmin !== "true" && (
+              {localStorage.getItem("isAdmin") !== "true" && (
                   <div onClick={() => setHome(!home)}>
                     {home ? (
                       <Link
