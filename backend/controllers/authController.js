@@ -68,7 +68,7 @@ export const userLogin = async (req,res) => {
 
     let user = await User.findOne({email});
 
-    if(!user) return res.status(400).json({message:"User Not Found"});
+    if(!user) return res.status(400).json({message:"Incorrect Email"});
 
     if(!user.isVerified){
       return res.status(403).json({message:"Email Not Verified"});

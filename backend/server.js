@@ -16,7 +16,12 @@ dotenv.config();
 const app = express();
 
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173", // local
+    "https://hungrybird.vercel.app" // deployed
+  ]
+}));
 app.use(express.json());
 app.use("/api/auth",authRoutes);
 

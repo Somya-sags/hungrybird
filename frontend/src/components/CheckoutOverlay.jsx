@@ -12,6 +12,7 @@ const subtotal = cart.reduce((sum, item) => {
   const price = Number(item.price) || 0;
   const qty = Number(item.qty) || 0;
   const addonPrice = Number(item.addon?.price) || 0;
+  const API_URL = import.meta.env.VITE_API_URL;
 
   return sum + (price * qty) + addonPrice;
 }, 0);
@@ -36,7 +37,7 @@ const total = subtotal + deliveryCharge;
 
   try {
     await axios.post(
-      "http://localhost:5000/orders",
+      `${API_URL}/orders`,
       orderData,
       {
         headers: {

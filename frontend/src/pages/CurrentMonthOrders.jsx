@@ -5,13 +5,14 @@ export default function CurrentMonthOrders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const token = localStorage.getItem("token");
 
-        const res = await axios.get("http://localhost:5000/orders/my-month-orders", {
+        const res = await axios.get(`${API_URL}/orders/my-month-orders`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -176,13 +177,3 @@ export default function CurrentMonthOrders() {
     </div>
   );
 }
-
-/*
-Backend route required:
-
-
-
-Route in App.jsx:
-
-<Route path="/my-orders" element={<CurrentMonthOrders />} />
-*/

@@ -7,13 +7,14 @@ export default function Admin() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchTodayOrders = async () => {
       try {
         const token = localStorage.getItem("token");
 
-        const res = await axios.get("http://localhost:5000/admin/orders/today", {
+        const res = await axios.get(`${API_URL}/admin/orders/today`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

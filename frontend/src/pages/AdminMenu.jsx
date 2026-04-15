@@ -13,6 +13,7 @@ export default function AdminMenu() {
   const [categoriesDraft, setCategoriesDraft] = useState([]);
   const [categories, setCategories] = useState([]);
 
+  const API_URL = import.meta.env.VITE_API_URL;
     const addFlavour = () => {
     if (!flavourInput) return;
     setFlavours([...flavours, flavourInput]);
@@ -52,7 +53,7 @@ const handleSaveCategory = async () => {
 
   try {
     const res = await axios.post(
-      "http://localhost:5000/api/categories/bulk",
+      `${API_URL}/api/categories/bulk`,
       categoriesDraft
     );
 
@@ -104,7 +105,7 @@ const handleSaveItems = async () => {
 
   try {
     await axios.post(
-      "http://localhost:5000/api/items/bulk",
+      `${API_URL}/api/items/bulk`,
       itemsDraft
     );
     console.log(itemsDraft);
@@ -120,7 +121,7 @@ const handleSaveItems = async () => {
 
 const fetchCategories = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/categories");
+      const res = await axios.get(`${API_URL}/api/categories`);
       setCategories(res.data);
     } catch (err) {
       console.error(err);

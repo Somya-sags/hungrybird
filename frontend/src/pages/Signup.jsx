@@ -13,6 +13,7 @@ export default function Signup() {
   const [confirmpass, setConfirmpass] = useState("");
   const [phone,setPhone] = useState("");
   const [error,setError] = useState("");
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const navigate = useNavigate();
 
@@ -22,7 +23,7 @@ export default function Signup() {
     
 
     try{
-      await axios.post("http://localhost:5000/signup",{
+      await axios.post(`${API_URL}/signup`,{
         name,
         email,
         password,

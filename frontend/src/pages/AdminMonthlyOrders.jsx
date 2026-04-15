@@ -5,6 +5,7 @@ export default function AdminMonthlyOrders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -12,7 +13,7 @@ export default function AdminMonthlyOrders() {
         const token = localStorage.getItem("token");
 
         const res = await axios.get(
-          "http://localhost:5000/orders/admin-month-orders",
+          `${API_URL}/orders/admin-month-orders`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -6,6 +6,7 @@ export default function OtpVerify() {
   
   const {state} = useLocation();
   const email = state?.email;
+  const API_URL = import.meta.env.VITE_API_URL;
 
   if (!state?.email) {
     return <Navigate to="/signup" replace />;
@@ -48,7 +49,7 @@ function OtpContent() {
   const handleSendOtp = async () => {
     try{
         console.log(email);
-        await axios.post("http://localhost:5000/api/auth/sendotp",{
+        await axios.post(`${API_URL}/api/auth/sendotp`,{
             email
         });
         setOtpSent(true);
@@ -60,7 +61,7 @@ function OtpContent() {
 
   const handleVerify = async () => {
     try{
-      await axios.post("http://localhost:5000/api/auth/verifyotp",{
+      await axios.post(`${API_URL}/api/auth/verifyotp`,{
         email,
         otp
       });

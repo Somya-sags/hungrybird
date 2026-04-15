@@ -11,6 +11,7 @@ export default function Menu() {
   const [activeCategory, setActiveCategory] = useState(null);
   const [showCheckout, setShowCheckout] = useState(false);
   const [selectedFlavours, setSelectedFlavours] = useState({});
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const sectionRefs = useRef({});
   const navigate = useNavigate();
@@ -69,7 +70,7 @@ export default function Menu() {
 
 
   const fetchMenu = async () => {
-    const res = await axios.get("http://localhost:5000/api/menu");
+    const res = await axios.get(`${API_URL}/api/menu`);
     setCategories(res.data.categories);
     setItems(res.data.items);
   };

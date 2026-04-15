@@ -5,13 +5,14 @@ import { useNavigate } from "react-router-dom";
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/forgot-password",
+        `${API_URL}/api/auth/forgot-password`,
         { email }
       );
 
