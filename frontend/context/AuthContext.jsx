@@ -6,6 +6,7 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const fetchMe = async () => {
     try {
@@ -17,7 +18,7 @@ export const AuthProvider = ({ children }) => {
         return;
       }
 
-      const res = await axios.get("http://localhost:5000/me", {
+      const res = await axios.get(`${API_URL}/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -38,7 +39,7 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem("token");
 
       await axios.post(
-        "http://localhost:5000/logout",
+        `${API_URL}/logout`,
         {},
         {
           headers: {
