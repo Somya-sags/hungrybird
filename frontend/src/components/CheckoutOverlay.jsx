@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 export default function CheckoutOverlay({ cart,setCart, onClose, navigate }) {
   const [address, setAddress] = useState("");
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
 const deliveryCharge = 20;
 
 const subtotal = cart.reduce((sum, item) => {
@@ -18,7 +20,7 @@ const subtotal = cart.reduce((sum, item) => {
 
   const total = subtotal + deliveryCharge;
 
-  const API_URL = import.meta.env.VITE_API_URL;
+  
 
   const handleProceed = async () => {
   if (!address.trim()) {
