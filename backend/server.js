@@ -21,7 +21,8 @@ const PORT = process.env.PORT || 5000;
 app.use(cors({
   origin: [
     "http://localhost:5173", // local
-    "https://hungrybird.vercel.app" // deployed
+    "https://hungrybird.cc",
+    "https://www.hungrybird.cc"
   ]
 }));
 app.use(express.json());

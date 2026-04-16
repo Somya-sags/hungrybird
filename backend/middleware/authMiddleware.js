@@ -18,13 +18,9 @@ const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     req.user = decoded;
 
     next();
-  } catch (err) {
-  console.log("ERROR:", err.response?.data || err.message);
-
-  if (err.response?.status === 401) {
-    alert("Session expired, please login again");
-  } else {
-    alert("Order failed");
+  } catch (error) {
+    return res.status(401).json({
+      message: "Please Login to continue"
+    });
   }
-}
 };
