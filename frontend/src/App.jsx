@@ -17,12 +17,13 @@ import SharedOrder from './pages/SharedOrder'
 import './App.css'
 
 function App() {
+  const isAdmin = localStorage.getItem("isAdmin") === "true";
 
   return (
     <>
       <Navbar />
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={isAdmin ? <Admin /> : <Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/menu' element={<Menu />} />
