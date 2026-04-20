@@ -50,6 +50,7 @@ export const AuthProvider = ({ children }) => {
       console.log("Logout failed:", error);
     } finally {
       localStorage.removeItem("token");
+      localStorage.removeItem("isAdmin");
       setUser(null);
     }
   };
