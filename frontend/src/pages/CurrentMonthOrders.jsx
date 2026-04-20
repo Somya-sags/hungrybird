@@ -1,5 +1,6 @@
 import { useState,useEffect } from "react";
 import axios from "axios";
+import logo from "../assets/images/hblogo.jpeg"
 
 export default function CurrentMonthOrders() {
   const [orders, setOrders] = useState([]);
@@ -97,19 +98,38 @@ export default function CurrentMonthOrders() {
                 key={order._id}
                 className="rounded-3xl border border-orange-100 bg-white p-6 shadow-lg"
               >
-                <div className="mb-5 flex flex-col gap-3 border-b border-orange-100 pb-4 md:flex-row md:items-center md:justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-500">Order ID</p>
-                    <p className="font-semibold text-gray-800">#{order._id.slice(-8).toUpperCase()}</p>
-                  </div>
+                <div className="mb-5 flex flex-col gap-4 border-b border-orange-100 pb-4 md:flex-row md:items-center md:justify-between">
 
-                  <div>
-                    <p className="text-sm font-medium text-gray-500">Placed On</p>
-                    <p className="font-semibold text-gray-800">
-                      {formatDateTime(order.createdAt)} IST
-                    </p>
+                    {/* LEFT: Logo + Order ID */}
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={logo}
+                        alt="Cafe Logo"
+                        className="h-12 w-12 rounded-full object-cover border border-gray-200 shadow-sm"
+                      />
+
+                      <div>
+                        <p className="text-sm font-medium text-gray-500">Order ID</p>
+                        <p className="font-semibold text-gray-800">
+                          #{order._id.slice(-8).toUpperCase()}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* RIGHT: Date + Share */}
+                    <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-4">
+
+                      {/* Date */}
+                      <div className="text-left md:text-right">
+                        <p className="text-sm font-medium text-gray-500">Placed On</p>
+                        <p className="font-semibold text-gray-800">
+                          {formatDateTime(order.createdAt)} IST
+                        </p>
+                      </div>
+
+
+                    </div>
                   </div>
-                </div>
 
                 <div className="space-y-4">
                   {order.items.map((item, index) => (

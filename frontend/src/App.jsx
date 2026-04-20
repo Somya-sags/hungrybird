@@ -13,6 +13,7 @@ import { Routes,Route } from 'react-router-dom'
 import AdminRoute from './components/AdminRoutes'
 import CurrentMonthOrders from './pages/CurrentMonthOrders'
 import AdminMonthlyOrders from './pages/AdminMonthlyOrders'
+import SharedOrder from './pages/SharedOrder'
 import './App.css'
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
             <AdminMonthlyOrders />
           </AdminRoute>
         } />
+        <Route path="/order/:id" element={<SharedOrder />} />
       </Routes>
     </>
   )

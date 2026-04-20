@@ -7,7 +7,7 @@ export default function Navbar() {
   const { user, loading, logout } = useAuth();
   const [home, setHome] = useState(true);
 
-  if (loading) return null;
+  if (loading) return <div>Loading ....</div>;
 
   const handleLogout = async () => {
     await logout();

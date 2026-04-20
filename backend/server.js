@@ -10,6 +10,7 @@ import authRoutes from "./routes/authRoutes.js";
 import { authMiddleware } from "./middleware/authMiddleware.js";
 import { adminMiddleware } from "./middleware/adminMiddleware.js"
 import Order from "./models/orderSchema.js";
+import { getPublicOrder } from "./controllers/orderController.js";
 
 
 dotenv.config();
@@ -191,3 +192,5 @@ app.get(
     }
   }
 );
+
+app.get("/orders/public/:id", getPublicOrder);
