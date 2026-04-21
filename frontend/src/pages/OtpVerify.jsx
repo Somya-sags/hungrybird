@@ -6,7 +6,7 @@ export default function OtpVerify() {
   
   const {state} = useLocation();
   const email = state?.email;
-  const API_URL = import.meta.env.VITE_API_URL;
+  
 
   if (!state?.email) {
     return <Navigate to="/signup" replace />;
@@ -45,6 +45,7 @@ function OtpContent() {
   const navigate = useNavigate();
   const {state} = useLocation();
   const email = state?.email;
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const handleSendOtp = async () => {
     try{
@@ -54,9 +55,10 @@ function OtpContent() {
         });
         setOtpSent(true);
     }
-    catch(error){
-      alert(error.response?.data?.message || "Failed to send OTP");
-    }
+    catch (error) {
+  console.log(error); // VERY IMPORTANT
+  alert(error.response?.data?.message || error.message);
+}
   };
 
   const handleVerify = async () => {
