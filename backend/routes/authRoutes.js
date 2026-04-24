@@ -96,7 +96,7 @@ router.post("/forgot-password", async (req, res) => {
 
     await user.save();
 
-    const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
+    const resetUrl = `https://hungrybird.cc/reset-password/${resetToken}`;
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
