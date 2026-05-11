@@ -194,3 +194,29 @@ app.get(
 );
 
 app.get("/orders/public/:id", getPublicOrder);
+
+app.get("/api/menu/search", async (req, res) => {
+  try {
+    const { query } = req.query;
+
+    if (!query) {
+      return res.json([]);
+    }
+
+    const items = await Item.find({
+      name: {
+        $regex: query,
+        $options: "i",
+      },
+    })
+    .populate("categoryId")
+    .limit(10);
+
+    res.json(items);
+
+  } catch (err) {
+    res.status(500).json({
+      message: "Search failed",
+    });
+  }
+});

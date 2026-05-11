@@ -11,12 +11,16 @@ export default function Menu() {
   const [activeCategory, setActiveCategory] = useState(null);
   const [showCheckout, setShowCheckout] = useState(false);
   const [selectedFlavours, setSelectedFlavours] = useState({});
+  const [search,setSearch] = useState("");
+  const [results,setResults] = useState([]);
   const API_URL = import.meta.env.VITE_API_URL;
 
   const sectionRefs = useRef({});
   const navigate = useNavigate();
 
-  // ================= LOAD DATA =================
+  const controllerRef = useRef();
+
+ 
   useEffect(() => {
     fetchMenu();
 
@@ -97,7 +101,7 @@ export default function Menu() {
 
   const increaseQty = (item) => {
   const addon = selectedAddons[item.categoryId];
-   const flavour = selectedFlavours[item.categoryId];
+  const flavour = selectedFlavours[item.categoryId];
 
   const exists = cart.find((i) => i._id === item._id);
 
@@ -141,7 +145,6 @@ export default function Menu() {
   return cart.some((item) => String(item.categoryId) === String(categoryId));
 };
 
-  // ================= TOTAL =================
   const totalItems = cart.reduce((sum, i) => sum + i.qty, 0);
 
 
@@ -205,6 +208,52 @@ export default function Menu() {
   );
 }
 
+const handleSearch = async (value) => {
+  setSearch(value);
+
+  if (!value.trim()) {
+    setResults([]);
+    return;
+  }
+
+  if(controllerRef.current){
+    controllerRef.current.abort();
+  }
+
+  const controller = new AbortController();
+
+  controllerRef.current = controller;
+  try {
+    const res = await axios.get(
+      `${API_URL}/api/menu/search?query=${value}`,
+      {
+        signal : controller.signal,
+      }
+    );
+
+    setResults(res.data);
+  } catch (err) {
+
+    if (err.name === "CanceledError") {
+      return;
+    }
+    
+    console.log(err);
+  }
+};
+
+const handleSelect = (categoryId) => {
+
+  setActiveCategory(categoryId);
+  scrollToCategory(categoryId);
+  
+
+  setSearch("");
+
+  setResults([]);
+
+};
+
 useEffect(() => {
   setCart((prevCart) =>
     prevCart.map((item) => {
@@ -227,10 +276,53 @@ useEffect(() => {
   );
 }, [selectedFlavours]);
 
+useEffect(() => {
+
+  const delay = setTimeout(() => {
+
+    if(search.trim()) {
+      handleSearch();
+    } else {
+      setResults([]);
+    }
+
+  }, 300);
+
+  return () => clearTimeout(delay);
+
+}, [search]);
+
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      <div className="flex justify-center  items-center my-4">
+      <div className="flex justify-between  items-center my-4">
+        <div className="w-55"></div>
         <h1 className="font-[Poppins] text-6xl font-semibold">Our Menu</h1>
+
+        <div className="relative">
+      <input
+        type="text"
+        value={search}
+        onChange={(e) => handleSearch(e.target.value)}
+        placeholder="Search food..."
+        className="border border-gray-300 rounded-full px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-orange-400"
+      />
+
+      {results.length > 0 && (
+        <div className="absolute top-14 right-0 w-64 bg-white shadow-lg rounded-lg border z-[999] max-h-60 overflow-y-auto">
+
+          {results.map((item) => (
+            <div
+              key={item._id}
+              onClick={() => handleSelect(item.categoryId._id)}
+              className="px-4 py-3 hover:bg-orange-100 cursor-pointer border-b"
+            >
+              {item.name}
+            </div>
+          ))}
+
+        </div>
+      )}
+    </div>
       </div>
 
       {/* ================= CATEGORY TABS ================= */}
